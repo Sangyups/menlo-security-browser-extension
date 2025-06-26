@@ -71,6 +71,8 @@ tags
 # Built Visual Studio Code Extensions
 *.vsix
 
+AGENTS.md
+
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
