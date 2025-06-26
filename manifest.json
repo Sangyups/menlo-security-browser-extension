@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Menlo Security Link Protector",
+  "version": "1.0",
+  "description": "Adds a Menlo Security prefix to all links when enabled.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon-off.svg",
+    "default_title": "Menlo Security Link Protector",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_scripts/link_modifier.js"]
+    }
+  ],
+  "icons": {
+    "48": "icons/icon-on.svg"
+  }
+}
