@@ -14,31 +14,41 @@ function shouldExclude(url, regexList) {
   return regexList.some((re) => re.test(url));
 }
 
-function modifyLinks() {
+function modifyLinks(enabled = true) {
   browser.storage.local.get('exclusionRules').then(({ exclusionRules }) => {
     const regexList = buildRegexList(exclusionRules || []);
     const links = document.querySelectorAll('a');
     for (const link of links) {
-      if (!link.href || link.href.startsWith(menloPrefix) || shouldExclude(link.href, regexList)) {
-        continue;
+      if (!link.href) continue;
+      
+      if (enabled) {
+        // Add prefix if not already present and not excluded
+        if (!link.href.startsWith(menloPrefix) && !shouldExclude(link.href, regexList)) {
+          link.href = menloPrefix + link.href;
+        }
+      } else {
+        // Remove prefix if present
+        if (link.href.startsWith(menloPrefix)) {
+          link.href = link.href.substring(menloPrefix.length);
+        }
       }
-      link.href = menloPrefix + link.href;
     }
   });
-  
 }
 
 // Initial modification when the script loads if enabled
 browser.storage.local.get('enabled').then(({ enabled }) => {
   if (enabled) {
-    modifyLinks();
+    modifyLinks(true);
   }
 });
 
 // Listen for messages from the background script or popup
 browser.runtime.onMessage.addListener((message) => {
   if (message.command === "apply_modifications") {
-    modifyLinks();
+    modifyLinks(true);
+  } else if (message.command === "remove_modifications") {
+    modifyLinks(false);
   }
 });
 

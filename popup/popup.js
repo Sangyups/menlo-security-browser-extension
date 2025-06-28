@@ -30,5 +30,8 @@ function updateUI(enabled) {
     status.classList.remove('status-on');
     toggle.checked = false;
     browser.browserAction.setIcon({ path: '../icons/icon-off.svg' });
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, { command: 'remove_modifications' });
+    });
   }
 }
