@@ -11,20 +11,20 @@ function renderRule(pattern) {
 }
 
 function load() {
-  browser.storage.local.get('exclusionRules').then(({ exclusionRules }) => {
+  browserAPI.storage.local.get('exclusionRules').then(({ exclusionRules }) => {
     listEl.innerHTML = '';
     (exclusionRules || []).forEach(renderRule);
   });
 }
 
 function save(newRules) {
-  browser.storage.local.set({ exclusionRules: newRules });
+  browserAPI.storage.local.set({ exclusionRules: newRules });
 }
 
 function addRule() {
   const pattern = inputEl.value.trim();
   if (!pattern) return;
-  browser.storage.local.get('exclusionRules').then(({ exclusionRules }) => {
+  browserAPI.storage.local.get('exclusionRules').then(({ exclusionRules }) => {
     const rules = exclusionRules || [];
     if (!rules.includes(pattern)) {
       rules.push(pattern);
@@ -36,7 +36,7 @@ function addRule() {
 }
 
 function deleteRule(pattern) {
-  browser.storage.local.get('exclusionRules').then(({ exclusionRules }) => {
+  browserAPI.storage.local.get('exclusionRules').then(({ exclusionRules }) => {
     const rules = (exclusionRules || []).filter((p) => p !== pattern);
     save(rules);
     load();

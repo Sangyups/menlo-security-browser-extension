@@ -1,15 +1,16 @@
 const toggle = document.getElementById('toggle');
 const status = document.getElementById('status');
 
-browser.storage.local.get('enabled', (data) => {
+browserAPI.storage.local.get('enabled').then((data) => {
   const enabled = data.enabled ?? false;
   toggle.checked = enabled;
   updateUI(enabled);
 });
+
 toggle.addEventListener('change', () => {
-  browser.storage.local.get('enabled', (data) => {
+  browserAPI.storage.local.get('enabled').then((data) => {
     const enabled = !data.enabled;
-    browser.storage.local.set({ enabled });
+    browserAPI.storage.local.set({ enabled });
     updateUI(enabled);
   });
 });
@@ -20,18 +21,18 @@ function updateUI(enabled) {
     status.classList.add('status-on');
     status.classList.remove('status-off');
     toggle.checked = true;
-    browser.browserAction.setIcon({ path: '../icons/icon-on.svg' });
-    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      browser.tabs.sendMessage(tabs[0].id, { command: 'apply_modifications' });
+    browserAPI.action.setIcon({ path: '../icons/icon-on.svg' });
+    browserAPI.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+      browserAPI.tabs.sendMessage(tabs[0].id, { command: 'apply_modifications' });
     });
   } else {
     status.textContent = 'OFF';
     status.classList.add('status-off');
     status.classList.remove('status-on');
     toggle.checked = false;
-    browser.browserAction.setIcon({ path: '../icons/icon-off.svg' });
-    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      browser.tabs.sendMessage(tabs[0].id, { command: 'remove_modifications' });
+    browserAPI.action.setIcon({ path: '../icons/icon-off.svg' });
+    browserAPI.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+      browserAPI.tabs.sendMessage(tabs[0].id, { command: 'remove_modifications' });
     });
   }
 }
