@@ -1,13 +1,15 @@
 const menloPrefix = "https://safe.menlosecurity.com/";
 
 function buildRegexList(patterns = []) {
-  return patterns.map((p) => {
-    try {
-      return new RegExp(p);
-    } catch {
-      return null;
-    }
-  }).filter(Boolean);
+  return patterns
+    .map((p) => {
+      try {
+        return new RegExp(p);
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
 }
 
 function shouldExclude(url, regexList) {
@@ -15,14 +17,17 @@ function shouldExclude(url, regexList) {
 }
 
 function modifyLinks(enabled = true) {
-  browserAPI.storage.local.get('exclusionRules').then(({ exclusionRules }) => {
+  browserAPI.storage.local.get("exclusionRules").then(({ exclusionRules }) => {
     const regexList = buildRegexList(exclusionRules || []);
-    const links = document.querySelectorAll('a');
+    const links = document.querySelectorAll("a");
     for (const link of links) {
       if (!link.href) continue;
-      
+
       if (enabled) {
-        if (!link.href.startsWith(menloPrefix) && !shouldExclude(link.href, regexList)) {
+        if (
+          !link.href.startsWith(menloPrefix) &&
+          !shouldExclude(link.href, regexList)
+        ) {
           link.href = menloPrefix + link.href;
         }
       } else {
@@ -34,7 +39,7 @@ function modifyLinks(enabled = true) {
   });
 }
 
-browserAPI.storage.local.get('enabled').then(({ enabled }) => {
+browserAPI.storage.local.get("enabled").then(({ enabled }) => {
   if (enabled) {
     modifyLinks(true);
   }
@@ -49,23 +54,30 @@ browserAPI.runtime.onMessage.addListener((message) => {
 });
 
 const observer = new MutationObserver((mutations) => {
-  browserAPI.storage.local.get(['enabled', 'exclusionRules']).then(({ enabled, exclusionRules }) => {
-    if (!enabled) return;
-    const regexList = buildRegexList(exclusionRules || []);
-    for (const mutation of mutations) {
-      if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType !== Node.ELEMENT_NODE) return;
-          const linkNodes = node.tagName === 'A' ? [node] : node.querySelectorAll('a');
-          linkNodes.forEach((link) => {
-            if (!link.href || link.href.startsWith(menloPrefix) || shouldExclude(link.href, regexList)) return;
-            link.href = menloPrefix + link.href;
+  browserAPI.storage.local
+    .get(["enabled", "exclusionRules"])
+    .then(({ enabled, exclusionRules }) => {
+      if (!enabled) return;
+      const regexList = buildRegexList(exclusionRules || []);
+      for (const mutation of mutations) {
+        if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType !== Node.ELEMENT_NODE) return;
+            const linkNodes =
+              node.tagName === "A" ? [node] : node.querySelectorAll("a");
+            linkNodes.forEach((link) => {
+              if (
+                !link.href ||
+                link.href.startsWith(menloPrefix) ||
+                shouldExclude(link.href, regexList)
+              )
+                return;
+              link.href = menloPrefix + link.href;
+            });
           });
-        });
+        }
       }
-    }
-  });
+    });
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
-

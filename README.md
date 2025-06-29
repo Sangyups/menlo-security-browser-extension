@@ -15,16 +15,19 @@ Adds the `https://safe.menlosecurity.com/` prefix to every hyperlink on visited 
 ## Installation & Development
 
 ### Prerequisites
+
 ```bash
 npm install
 ```
 
 ### Firefox Development
+
 ```bash
 npm run dev:firefox    # launches temporary Firefox profile with the extension
 ```
 
 ### Chrome Development
+
 ```bash
 npm run dev:chrome     # builds Chrome version and launches with web-ext
 ```
@@ -32,29 +35,32 @@ npm run dev:chrome     # builds Chrome version and launches with web-ext
 ## Building for Release
 
 ### Build Both Versions
+
 ```bash
 npm run build:all      # creates both Firefox and Chrome packages
 ```
 
 ### Build Individual Versions
+
 ```bash
 npm run build:firefox  # creates dist/menlo-security-firefox-{version}.zip
 npm run build:chrome   # creates dist/menlo-security-chrome-{version}.zip
 ```
 
 ### Quick Build Script
+
 ```bash
 ./build.sh             # runs the complete build process
 ```
 
 ## Browser Differences
 
-| Feature | Firefox (Manifest V2) | Chrome (Manifest V3) |
-|---------|----------------------|---------------------|
-| API | `browser.*` | `chrome.*` |
-| Action | `browser_action` | `action` |
-| Options | `options_ui.browser_style` | `options_ui` only |
-| Promises | Native | Callback-based (wrapped) |
+| Feature  | Firefox (Manifest V2)      | Chrome (Manifest V3)     |
+| -------- | -------------------------- | ------------------------ |
+| API      | `browser.*`                | `chrome.*`               |
+| Action   | `browser_action`           | `action`                 |
+| Options  | `options_ui.browser_style` | `options_ui` only        |
+| Promises | Native                     | Callback-based (wrapped) |
 
 The extension automatically detects the browser environment and uses the appropriate APIs through the unified `browserAPI` wrapper.
 
@@ -62,7 +68,7 @@ The extension automatically detects the browser environment and uses the appropr
 
 ```
 content_scripts/       # Link modification logic injected into pages
-popup/                # Browser action popup UI  
+popup/                # Browser action popup UI
 options/              # Preferences page to manage regex exclusions
 icons/                # SVG icons for toolbar state
 utils/                # Cross-browser API wrapper
@@ -75,7 +81,7 @@ build.sh              # Cross-platform build script
 ## Browser-Specific Files
 
 - `manifest.json` - Firefox (Manifest V2)
-- `manifest-chrome.json` - Chrome (Manifest V3) 
+- `manifest-chrome.json` - Chrome (Manifest V3)
 - `utils/browser-api.js` - Unified API wrapper
 
 ## Contributing

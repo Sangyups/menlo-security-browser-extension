@@ -11,7 +11,8 @@ h1 {
   font-size: 20px;
 }
 
-input, button {
+input,
+button {
   box-sizing: border-box;
 }
 

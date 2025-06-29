@@ -3,10 +3,7 @@
   "name": "Menlo Security Link Protector",
   "version": "1.1.0",
   "description": "Adds a Menlo Security prefix to all links when enabled.",
-  "permissions": [
-    "activeTab",
-    "storage"
-  ],
+  "permissions": ["activeTab", "storage"],
   "browser_action": {
     "default_icon": "icons/icon-off.svg",
     "default_title": "Menlo Security Link Protector",
@@ -22,9 +19,7 @@
       "js": ["utils/browser-api.js", "content_scripts/link_modifier.js"]
     }
   ],
-  "web_accessible_resources": [
-    "utils/browser-api.js"
-  ],
+  "web_accessible_resources": ["utils/browser-api.js"],
   "icons": {
     "16": "icons/icon-on.svg",
     "48": "icons/icon-on.svg",

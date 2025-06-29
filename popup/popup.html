@@ -1,22 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Menlo Security Link Protector</title>
-  <link rel="stylesheet" type="text/css" href="popup.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="container">
-    <h1>Link Protector</h1>
-    <div class="status-container">
-      Status: <span id="status" class="status-off">OFF</span>
+  <head>
+    <title>Menlo Security Link Protector</title>
+    <link rel="stylesheet" type="text/css" href="popup.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Link Protector</h1>
+      <div class="status-container">
+        Status: <span id="status" class="status-off">OFF</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="toggle" aria-label="Enable Link Protector" />
+        <span class="slider"></span>
+      </label>
     </div>
-    <label class="switch">
-      <input type="checkbox" id="toggle" aria-label="Enable Link Protector">
-      <span class="slider"></span>
-     </label>
-  </div>
-  <script src="../utils/browser-api.js"></script>
-  <script src="popup.js"></script>
-</body>
+    <script src="../utils/browser-api.js"></script>
+    <script src="popup.js"></script>
+  </body>
 </html>

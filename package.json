@@ -3,12 +3,13 @@
   "version": "1.1.0",
   "description": "Cross-browser extension that adds Menlo Security prefix to links",
   "scripts": {
-    "dev:firefox": "npx web-ext run",
-    "dev:chrome": "npm run prepare:chrome && npx web-ext run --source-dir=dist/chrome",
-    "build:firefox": "npx web-ext build --source-dir=. --artifacts-dir=dist --filename=menlo-security-firefox-{version}.zip --ignore-files=dist/ node_modules/ .git/ .DS_Store manifest-chrome.json package*.json build.sh",
-    "build:chrome": "npm run prepare:chrome && npx web-ext build --source-dir=dist/chrome --artifacts-dir=dist --filename=menlo-security-chrome-{version}.zip",
+    "dev:firefox": "web-ext run",
+    "dev:chrome": "npm run prepare:chrome && web-ext run --source-dir=dist/chrome",
+    "build:firefox": "web-ext build --source-dir=. --artifacts-dir=dist --filename=menlo-security-firefox-{version}.zip --ignore-files=dist/ node_modules/ .git/ .DS_Store manifest-chrome.json package*.json build.sh",
+    "build:chrome": "npm run prepare:chrome && web-ext build --source-dir=dist/chrome --artifacts-dir=dist --filename=menlo-security-chrome-{version}.zip",
     "prepare:chrome": "rm -rf dist/chrome && mkdir -p dist/chrome && rsync -av --exclude='dist/' --exclude='node_modules/' --exclude='.git/' --exclude='.DS_Store' --exclude='package*.json' --exclude='build.sh' --exclude='manifest-chrome.json' . dist/chrome/ && cp manifest-chrome.json dist/chrome/manifest.json",
     "build:all": "npm run build:firefox && npm run build:chrome",
+    "format": "prettier --write .",
     "clean": "rm -rf dist"
   },
   "keywords": [
@@ -19,6 +20,9 @@
     "link-protection"
   ],
   "author": "Menlo Security",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "web-ext": "^8.8.0"
+  }
 }
-
