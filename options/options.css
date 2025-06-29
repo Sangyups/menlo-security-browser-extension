@@ -1,7 +1,9 @@
 body {
   font-family: system-ui, sans-serif;
   margin: 24px;
+  min-width: 480px;
   max-width: 500px;
+  width: 500px;
 }
 
 h1 {
@@ -9,7 +11,6 @@ h1 {
   font-size: 20px;
 }
 
-/* input row */
 input, button {
   box-sizing: border-box;
 }
@@ -17,10 +18,12 @@ input, button {
 .input-row {
   display: flex;
   gap: 6px;
+  width: 100%;
 }
 
 #pattern {
   flex: 1;
+  min-width: 0;
   padding: 6px 8px;
   font-size: 14px;
   border: 1px solid #c2c7cf;
@@ -28,9 +31,10 @@ input, button {
 }
 
 #add {
+  flex-shrink: 0;
+  width: 40px;
   padding: 4px 8px;
   font-size: 16px;
-
   cursor: pointer;
   background-color: #0060df;
   border: none;
@@ -47,6 +51,7 @@ ul {
   list-style: none;
   padding: 0;
   margin: 12px 0 0 0;
+  width: 100%;
 }
 
 li {
@@ -57,19 +62,31 @@ li {
   border-radius: 4px;
   padding: 4px 8px;
   margin-bottom: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 32px;
 }
 
 .expr {
   flex: 1;
+  min-width: 0;
   white-space: pre-wrap;
+  word-break: break-all;
   font-family: monospace;
   font-size: 13px;
+  margin-right: 8px;
 }
 
 .remove {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
   background: transparent;
   border: none;
   color: #d20000;
   font-size: 16px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
